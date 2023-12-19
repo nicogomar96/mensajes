@@ -1,12 +1,10 @@
 import express from 'express';
-import cors from 'cors';
 import bodyParser from 'body-parser';
 import pkg from 'qrcode-terminal';
 import pkg2 from 'whatsapp-web.js';
 
 const app = express();
 
-app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
