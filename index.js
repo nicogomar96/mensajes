@@ -1,9 +1,12 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const qrcode = require('qrcode-terminal');
-const { Client, LocalAuth } = require('whatsapp-web.js');
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import pkg from 'qrcode-terminal';
+import pkg2 from 'whatsapp-web.js';
 
 const app = express();
+
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -16,21 +19,21 @@ app.post('/', (req, res) => {
 });
 
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 app.listen(port, () => {
     console.log(`Servidor en ejecución en el puerto ${port}`);
 });
 
-
-const client = new Client({
-    authStrategy: new LocalAuth()
+const client = new pkg2.Client({
+    authStrategy: new pkg2.LocalAuth()
 });
 
 
 client.on('qr', qr => {
-    qrcode.generate(qr, { small: true });
+    pkg.generate(qr, { small: true });
 });
 
+// @ts-ignore
 function enviarMensaje(numero, mensaje) {
     numero += '@c.us';
     client.sendMessage(numero, mensaje);
